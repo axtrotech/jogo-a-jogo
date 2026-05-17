@@ -90,9 +90,13 @@ export default function JogoAJogoApp() {
             </div>
           </div>
 
-          <button className="bg-green-500 hover:bg-green-400 transition-all px-6 py-3 rounded-2xl text-black font-black shadow-lg">
-            ENVIAR BILHETE
-          </button>
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+
+            <button className="bg-green-500 hover:bg-green-400 transition-all px-6 py-3 rounded-2xl text-black font-black shadow-lg cursor-pointer">
+              ENVIAR BILHETE
+            </button>
+          </div>
         </div>
       </header>
 
@@ -124,7 +128,11 @@ export default function JogoAJogoApp() {
 
         {/* UPLOAD CARD */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 shadow-2xl">
-          <div className="border-2 border-dashed border-green-500 rounded-3xl p-14 text-center bg-black hover:bg-zinc-950 transition-all cursor-pointer">
+          <div
+            {...getRootProps()}
+            className="border-2 border-dashed border-green-500 rounded-3xl p-14 text-center bg-black hover:bg-zinc-950 transition-all cursor-pointer"
+          >
+            <input {...getInputProps()} />
             <div className="w-24 h-24 mx-auto rounded-full bg-green-500/10 flex items-center justify-center mb-6 border border-green-500">
               <span className="text-5xl">📤</span>
             </div>
@@ -209,40 +217,73 @@ export default function JogoAJogoApp() {
               </p>
             </div>
 
-            <button className="bg-green-500 hover:bg-green-400 transition-all px-6 py-3 rounded-2xl text-black font-black">
+            <button
+              onClick={copyText}
+              className="bg-green-500 hover:bg-green-400 transition-all px-6 py-3 rounded-2xl text-black font-black cursor-pointer"
+            >
               COPIAR TEXTO
             </button>
           </div>
 
           <div className="bg-black rounded-3xl border border-green-500 p-8 space-y-6 text-lg">
-            <div>
-              <p className="text-zinc-500">🏆 Premier League</p>
-            </div>
-
-            <div>
-              <p className="text-3xl font-black">
-                ⚽ Chelsea vs Manchester City
-              </p>
-              <p className="text-zinc-400 mt-2">🕓 11:00 (BR)</p>
-            </div>
-
-            <div>
-              <p className="text-green-400 font-black text-2xl mb-4">
-                🎯 SUGESTÃO DE APOSTA:
-              </p>
-
-              <div className="space-y-3 text-xl">
-                <p>✅ Manchester City vence</p>
-                <p>✅ Mais de 9 escanteios</p>
-                <p>✅ Jeremy Doku — 1+ chutes</p>
-                <p>✅ Pedro Neto — 1+ chutes</p>
+            {loading && (
+              <div className="text-center py-10">
+                <p className="text-3xl font-black text-green-400">
+                  🤖 Lendo imagem...
+                </p>
               </div>
-            </div>
+            )}
 
-            <div>
-              <p className="text-zinc-500 mb-2">📈 Odd Total</p>
-              <p className="text-5xl font-black text-green-400">7.00</p>
-            </div>
+            {image && (
+              <div>
+                <h3 className="text-2xl font-black text-green-400 mb-4">
+                  Preview da imagem
+                </h3>
+
+                <img
+                  src={image}
+                  alt="preview"
+                  className="rounded-3xl border border-green-500 mb-8"
+                />
+              </div>
+            )}
+
+            {generatedText ? (
+              <pre className="whitespace-pre-wrap text-zinc-300 text-lg leading-relaxed">
+                {generatedText}
+              </pre>
+            ) : (
+              <>
+                <div>
+                  <p className="text-zinc-500">🏆 Premier League</p>
+                </div>
+
+                <div>
+                  <p className="text-3xl font-black">
+                    ⚽ Chelsea vs Manchester City
+                  </p>
+                  <p className="text-zinc-400 mt-2">🕓 11:00 (BR)</p>
+                </div>
+
+                <div>
+                  <p className="text-green-400 font-black text-2xl mb-4">
+                    🎯 SUGESTÃO DE APOSTA:
+                  </p>
+
+                  <div className="space-y-3 text-xl">
+                    <p>✅ Manchester City vence</p>
+                    <p>✅ Mais de 9 escanteios</p>
+                    <p>✅ Jeremy Doku — 1+ chutes</p>
+                    <p>✅ Pedro Neto — 1+ chutes</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-zinc-500 mb-2">📈 Odd Total</p>
+                  <p className="text-5xl font-black text-green-400">7.00</p>
+                </div>
+              </>
+            )}
 
             <div className="bg-green-500/10 border border-green-500 rounded-2xl p-6">
               <p className="text-zinc-300 leading-relaxed">
